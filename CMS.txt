@@ -1,0 +1,61 @@
+1.后台要有一个新闻编辑功能，能添加新闻，删除新闻，修改新闻，
+    编辑是富文本的，
+富文本要支持附件和图片	
+private Long   id = new Long(0);
+	
+private String url = ""; // 链接
+	
+private String title = ""; // 标题
+	
+private String content = ""; // 正文
+	
+private String signature = ""; // 网页标识
+	
+private String source = ""; // 新闻来源
+	
+private Date   time;          // 新闻入库时间
+
+private String board1 = ""; // 一级板块
+	
+private String board2 = ""; // 二级板块
+	
+private String board3 = ""; // 三级板块
+	
+private String author = ""; //发布者
+	
+private String auditor = "";//审核人
+	
+private Long   commentable = 0L;//评论数
+	
+private Long   hit = 0L;//阅读数
+
+private Long   isAvailable = 1L;//新闻是否可用
+	
+private Long   isTop = 0L;//是否置顶
+	
+private Long   isLink = 0L;//
+	
+private Long   isEmergency = 0L;//是否为紧急新闻
+
+2.是要有首页，频道页（带翻页），详情页，单个模板页，，，
+3.是要有一个发布程序，将1维护的数据，用模板生成一系列静态页面，，，，用户看的是3生成的静态页面，，，，，
+
+页面模块：
+首页：三个板块，   通过板块名跳转到列表页   
+列表页：  展示所有板块并带分页
+ 详情页：展示新闻的详请
+
+后台管理模块
+对新闻的增删改查，添加富文本功能
+
+
+页面展示模块
+
+
+不用django的模板语法来渲染数据，存储为html文件，可以直接打开显示的，
+
+
+
+
+
+192.168.120.142

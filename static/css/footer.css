@@ -1,0 +1,66 @@
+.left_footer {
+    height: 90px;
+    width: 330px;
+    position: relative;
+    display: block;
+}
+
+.weather_img {
+    width: 24%;
+    float: left;
+    height: 90px;
+}
+
+.date_info {
+    width: 45%;
+    float: left;
+    height: 90px;
+    text-align: center;
+}
+
+.air_info {
+    width: 30%;
+    float: left;
+    height: 90px;
+    text-align: center;
+}
+
+.date {
+    color: gray;
+    font-size: 10px;
+    font-family: fantasy;
+    width: 150px;
+}
+
+.temperature {
+    color: gray;
+    font-size: 10px;
+    font-family: fantasy;
+    width: 150px;
+}
+
+.lunar_date {
+    color: gray;
+    font-size: 10px;
+    font-family: fantasy;
+    width: 90px;
+}
+
+.air {
+    color: gray;
+    font-size: 10px;
+    font-family: fantasy;
+    width: 90px;
+}
+
+.banner {
+    height: 90px;
+    width: 900px;
+    padding: 12px;
+    position: absolute;
+    display: block;
+    font-size: 16px;
+    color: goldenrod;
+    text-align: center;
+
+}

@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/backstage.css" rel="stylesheet">
+    <!-- Add custom CSS here -->
+    <link href="/static/css/frame.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+    <link href="/static/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="/static/css/redactor.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+
+    <title>后台管理</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .choose{
+            margin-top: 10px;
+        }
+        .table tbody tr td:nth-child(1) p span:nth-child(0){
+            width: 30px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+        }
+        .p_style{
+            margin: 0 0;
+            float: left;
+        }
+        .no_top{
+            margin-top: 0;
+        }
+        .title_left{
+            float: left;
+            margin-right: 10px;
+        }
+        .span1{
+            background-color: #43BFE3;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .span2{
+            background-color: #FF4040;
+            color: #fff;
+            border-radius: 4px;
+        }
+        .navbar_brand{
+            height: 50px;
+            padding: 15px 15px;
+            margin-bottom: 5px;
+        }
+        .form-control{
+            width: 150px;
+        }
+        .body{
+            padding-left: 100px;
+        }
+        .sidebar{
+            width:100px;
+            height:100%;
+            border: 1px saddlebrown solid;
+            background-color: #2a6496;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a class="navbar_brand" href="/backstage/">后台管理</a>
+{#        <ul class="nav-right">#}
+{#            <li>#}
+{#                <a href="#">登陆</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="#">退出</a>#}
+{#            </li>#}
+{#        </ul>#}
+    </div>
+    <div class="body">
+        <div class="row">
+            <div class="pull-left margin_ddos1">
+                <h4><span class="tab_color">|</span>&nbsp;&nbsp;新闻管理</h4>
+            </div>
+            <div class="upper-btn-group margin_ddos1 pull-right">
+                <button resourceid="312" id="addButton" type="button" class="btn btn-interval btn-primary" onclick="window.open('../backstage/add_news/','_self')"><i class="fa fa-plus">&nbsp;&nbsp;</i>添加新闻</button>
+            </div>
+        </div>
+        <div class="row btn-banner upper-line"></div>
+        <div class="row btn-banner">
+
+            <div class="input-group date form_datetime date_div" style="width: 160px;float: left;margin-right: 10px;">
+                <input id="create_time" class="form-control" size="16" type="text" value="" readonly placeholder="产生时间">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+
+            <input id="title" type="text" class="form-control search-input title_left" placeholder="标题（模糊搜索）">
+
+
+            <div style="float: left;margin-right: 10px">
+                <div class="dropdown dropdown-inline choose no_top">
+                    <button type="button" data-toggle="dropdown" class="btn dropdown-btn dropdown-menu-width" aria-haspopup="true" aria-expanded="false">
+                        <span id="istop_type" class="pull-left" value="-1">所有类型</span>
+                        <i class="fa fa-sort-down pull-right"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-width dropdown-list-style" id="ipslist">
+                        <li onclick="selectProtoFwd(this);" value="-1">所有类型</li>
+                        <li onclick="selectProtoFwd(this);" value="1">置顶</li>
+                        <li onclick="selectProtoFwd(this);" value="0">普通</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="float: left;">
+                <div class="dropdown dropdown-inline choose no_top">
+                    <button type="button" data-toggle="dropdown" class="btn dropdown-btn dropdown-menu-width" aria-haspopup="true" aria-expanded="false">
+                        <span id="istop_emerg" class="pull-left" value="-1">所有类型</span>
+                        <i class="fa fa-sort-down pull-right"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-width dropdown-list-style" id="ipslist">
+                        <li onclick="selectProtoFwd(this);" value="-1">所有类型</li>
+                        <li onclick="selectProtoFwd(this);" value="1">紧急</li>
+                        <li onclick="selectProtoFwd(this);" value="0">非紧急</li>
+
+                    </ul>
+                </div>
+            </div>
+
+
+            <button id="searchButton" type="button" class="btn btn-primary btn-interval"><i class="fa fa-search">&nbsp;&nbsp;</i>搜索</button>
+            <button id="clearButton" type="button" class="btn btn-default" style="margin-left: 10px"><i class="fa fa-eraser">&nbsp;&nbsp;</i>清除</button>
+        </div>
+        <div class="row">
+        <div class="span9">
+            <table class="table table-bordered table-striped" id="maintable">
+                <thead>
+                    <tr>
+                        <th width="2%"></th>
+                        <th width="10%" class="content-set">标题</th>
+                        <th width="10%">链接</th>
+                        <th width="5%">网页标识</th>
+                        <th width="5%">新闻来源</th>
+                        <th width="23%">正文   新闻内容</th>
+                        <th width="10%">添加时间</th>
+                        <th width="4%">级别</th>
+                        <th width="3%">发布者</th>
+                        <th width="3%">审核人</th>
+                        <th width="3%">评论数</th>
+                        <th width="3%">阅读数</th>
+                        <th width="2%">是否可用</th>
+                        <th width="2%">是否置顶</th>
+                        <th width="2%">是否链接</th>
+                        <th width="2%">是否紧急</th>
+                        <th width="2%">是否最热</th>
+                        <th width="5%">操作</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                 <tfoot>
+                    <tr>
+                        <td colspan="15">
+                            <div class="pull-left">
+                                <button resourceid="312" class="btn btn-default btn-sm" id="del_new">删除</button>
+                                <button class="btn btn-default btn-sm" id="refresh" onclick="window.location.reload();">刷新</button>
+                            </div>
+                            <div class="pull-right">
+                                <div class="pagination">
+                                <span style="vertical-align:10px;">共有<strong id="totalcount"></strong>条，每页显示：<!--<strong id="p_size">10</strong>-->
+                                    <select id="p_size" onchange="selectPsize()" style="height:24px;border-radius:4px;">
+                                        <option value='10'>10</option>
+                                        <option value='20'>20</option>
+                                        <option value='50'>50</option>
+                                        <option value='100'>100</option>
+                                    </select>
+                                条</span>
+                                <ul id="pagination" class="pagination pagination-sm" style="margin: 0%;"></ul>
+                                <input type="text" class="form-control"
+                                       style="width: 50px;display: inline;height:29px; margin: 0%;vertical-align: 9px;border-radius: 4px;" id="pn"
+                                       placeholder="">
+                                <input type="button" class="form-control btn btn-primary"
+                                       style="width: 50px;display: inline;height:29px;margin: 0%;vertical-align: 8px;border-radius: 4px;padding: 5px 12px;float: none"
+                                       id="gotopn" value="跳转">
+	                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+        </div>
+    </div>
+
+{#    </div>#}
+    </div>
+{#    <div class="nav-collapse">#}
+{#        <h1>新闻管理</h1>#}
+{#        <button class="btn" type="button" id="searchButton">搜索新闻</button>#}
+{#        <input id="title" type="text" class="search-query" placeholder="Search" />#}
+{#        <button id="clearButton" type="button" class="btn btn-default">清除</button>#}
+{##}
+{#        <button type="button" class="btn brand" onclick="window.open('../backstage/add_news/','_self')">添加新闻</button>#}
+{##}
+{#    </div>#}
+
+    <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    提示框
+                </h4>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <p style="color: red"></p>
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+            <div id="new_label_div" style="display: none;text-align: center;">
+                <span>新备注标签：</span> <input id="new_label" type="text" class="form-control" style="width: 250px !important;display: inline-block !important;">
+                <div style="color:red"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="delSubmit" type="button" class="btn btn-primary">确定</button>
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+    <script src="/static/js/jquery-2.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.twbsPagination.min.js"></script>
+    <script src="/static/js/common.js"></script>
+
+<script src="/static/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script src="/static/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+
+    <script>
+
+         $('.form_datetime').datetimepicker({
+            language:  'zh-CN',
+            minView: "month",
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayBtn: true
+        });
+    function selectProtoFwd(obj) {
+            $(obj).parent().parent().find("span:first").attr("value",$(obj).attr("value"))
+            $(obj).parent().parent().find("span:first").text($(obj).text());
+        }
+
+    $('button.condition-btn.singlechoose').click(function () {
+        $(this).siblings().removeClass("active");
+        $(this).addClass("active");
+    })
+function ShowPage(msgListObj){
+    var is_map = {false:'否',true:'是'};
+        var is_rank = {0:'一级板块',1:'二级板块',2:'三级板块'};
+
+        $("#maintable tbody tr").remove();
+        var _row = $("<tr>" +
+            "<td width='2%'></td>" +
+            "<td width='10%' class=\"content-set\"></td>" +
+            "<td width='10%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='5%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='5%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='23%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='10%' style='color:#999999'></td>" +
+            "<td width='4%' style='color:#999999'></td>" +
+            "<td width='3%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='3%' style='color:#999999'></td>" +
+            "<td width='3%' style='color:#999999'></td>" +
+            "<td width='3%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='5%' style='color:#999999'></td>" +
+            "</tr>");
+         for (var i = 0; i < msgListObj.length; i++) {
+
+                     var row = _row.clone();
+                    row.find("td:eq(0)").html("<input type='checkbox' class='checkbox' id="+msgListObj[i]["id"]+">");
+            {#      row.find("td:eq(1)").text(function () {#}
+            {##}
+            {#    var $con=$("<p class='p_style'><span class='span1'></span><span class='span2'></span><span></span></p>");#}
+            {#    $(this).append($con);#}
+            {##}
+            {#    if(msgListObj[i]["is_top"] == 1){#}
+            {#        $(this).find("p span:eq(0)").html("置顶");#}
+            {#        $(this).find("p span:eq(0)").addClass("span1");#}
+            {#        $(this).find("p span:eq(0)").css({#}
+            {#            marginRight:"6px",#}
+            {#            padding:"2px 6px 2px 6px",#}
+            {#        })#}
+            {#    }#}
+            {#    if(msgListObj[i]["is_emerg"] == 1){#}
+            {#        $(this).find("p span:eq(1)").html("紧急");#}
+            {#        $(this).find("p span:eq(1)").addClass("span2");#}
+            {#        $(this).find("p span:eq(1)").css({#}
+            {#            marginRight:"6px",#}
+            {#            padding:"2px 6px 2px 6px",#}
+            {#    })#}
+            {#    }#}
+            {#    $(this).find("p span:eq(2)").text(msgListObj[i].title);#}
+            {#});#}
+                         row.find("td:eq(1)").text(msgListObj[i]["title"]);
+                         row.find("td:eq(2)").text(msgListObj[i]["url"]);
+                         row.find("td:eq(3)").text(msgListObj[i]["signature"]);
+                         row.find("td:eq(4)").text(msgListObj[i]["source"]);
+                         row.find("td:eq(5)").text(msgListObj[i]["content"]);
+                         row.find("td:eq(6)").text(msgListObj[i]["time"]);
+                         row.find("td:eq(7)").text(is_rank[msgListObj[i]["board_rank"]]);
+                         row.find("td:eq(8)").text(msgListObj[i]["acthor"]);
+                         row.find("td:eq(9)").text(msgListObj[i]["auditor"]);
+                         row.find("td:eq(10)").text(msgListObj[i]["commentable"]);
+                         row.find("td:eq(11)").text(msgListObj[i]["hit"]);
+                         row.find("td:eq(12)").text(is_map[msgListObj[i]["isAvailable"]]);
+                         row.find("td:eq(13)").text(is_map[msgListObj[i]["isTop"]]);
+                         row.find("td:eq(14)").text(is_map[msgListObj[i]["isLink"]]);
+                         row.find("td:eq(15)").text(is_map[msgListObj[i]["isEmergency"]]);
+                         row.find("td:eq(16)").text(is_map[msgListObj[i]["isHot"]]);
+                         row.find("td:eq(17)").html("<a href='#' class='view-link'>查看详情</a>");
+                        row.show();
+                        row.appendTo("#maintable tbody")
+
+                }
+                 rebindChkAll()
+    }
+
+     //分页设置
+    var option = {
+        visiblePages: 3,
+        first: "<<",
+        prev: "<",
+        next: ">",
+        last: ">>",
+        onPageClick: function (event, page){
+            {#alert(page)#}
+            $.ajax({
+                {#url: '/backstage/show',#}
+                url:option.myurl+"&pn="+page,
+                type: "post",
+                data: option.searchParam,
+                success:function(data) {
+                    {#var ret = JSON.parse(data);#}
+                    if (data["msg"].length != 0) {
+                        ShowPage(data["msg"]);
+                    } else if (data["msg"].length == 0) {
+                        $("#maintable tbody tr").remove();
+                        $("<tr><td colspan=" + col_size + " style='text-align: center'><h4>没有消息</h4></td></tr>").appendTo("#maintable tbody");
+                    }else{
+                        alert(data["msg"]);
+                    }
+                },
+            });
+
+        }
+    };
+
+    function pagination(totalcount,url,startPage,searchParam){
+        var totalPages = 0;
+        if(totalcount == 0){
+            totalPages = 1;
+        }else{
+            totalPages = Math.ceil(totalcount/p_size);
+        }
+        option["totalPages"] = totalPages;
+        option["myurl"] = url;
+        option["startPage"] = startPage;
+        option["searchParam"] = searchParam;
+        $('#pagination').twbsPagination(option);
+    }
+
+
+     function LoadPage(currentPage,searchParam){
+        $.ajax({
+            url:"/backstage/count/",
+            type: "post",
+            data: searchParam ,
+            success:function(data) {
+                if (data['msg']['count'] != 0)
+                    ret = data['msg']["count"];
+                else {
+                    ret = 0;
+                }
+                $("#totalcount").text(ret);
+                $('#pagination').empty();
+                $('#pagination').removeData("twbs-pagination");
+                $('#pagination').unbind("page");
+                pagination(ret,"/backstage/show?p_size="+p_size,parseInt(currentPage),searchParam)
+            },
+        })
+    }
+
+    var globalSearchParam = {random:1,"csrfmiddlewaretoken":'{{ csrf_token }}'};
+    LoadPage(1,globalSearchParam);
+
+
+        $("#searchButton").click(function(){
+
+        var istop_type=document.getElementById("istop_type");
+        var istop_emerg=document.getElementById("istop_emerg");
+
+        var title =  $("#title").val();
+        var create_time=$("#create_time").val();
+        var isTop=istop_type.getAttribute("value");
+        var isEmergency=istop_emerg.getAttribute("value");
+        globalSearchParam = {random:1,"csrfmiddlewaretoken":'{{ csrf_token }}'};
+
+        if(title!=""){
+            globalSearchParam["title"] = title
+        }
+        if(create_time!=""){
+            globalSearchParam["time"] = create_time
+        }
+        if(isTop!="-1"){
+            globalSearchParam["isTop"] = isTop
+        }
+        if(isEmergency!="-1"){
+            globalSearchParam["isEmergency"] = isEmergency
+        }
+        LoadPage(1,globalSearchParam)
+    })
+    {#$("#searchButton").click(function(){#}
+    {#     var keyword =  $("#keyword").val();#}
+    {#    $.ajax({#}
+    {#        url:"/backstage/show"+"?keyword="+keyword,#}
+    {#        type: "get",#}
+    {#        success:function(data) {#}
+    {#            alert('1111111111111111')#}
+    {#            if(data['code'] == 200){#}
+    {#                 ShowPage(data["msg"]);#}
+    {#            }else{#}
+    {#                alert('没有此条新闻')#}
+    {#            }#}
+    {##}
+    {#        },#}
+    {#    })#}
+    {##}
+    {#    url = url+'?title='+title;#}
+    {#    window.location.href = url;#}
+    {##}
+    {#清除按钮#}
+    $("#clearButton").click(function(){
+        $("#keyword").val("");
+    });
+
+
+            {#删除新闻#}
+    $("#del_new").click(function(){
+        $('#hintModal').find(".modal-title").html("删除提示框")
+
+        var lines = $("#maintable tbody tr");
+        var checkboxs = lines.find("input:eq(0):checkbox:checked");
+
+        if(checkboxs.size() == 0){
+            alert("请选择删除数据");
+            return;
+        }
+
+        var content = "<p >将删除<span style='color: red;font-size: large'>"+checkboxs.size()+"</span>条数据，请确认</p>"
+        $('#hintModal').find(".modal-body").html(content);
+
+        var footer = "<button id='delSubmit' type='button' class='btn btn-primary'>确定</button>"+
+            "<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>";
+        $('#hintModal').find(".modal-footer").html(footer);
+
+        $("#delSubmit").click(function(){
+            var carray =new Array()
+            var lines = $("#maintable tbody tr");
+            var checkboxs = lines.find("input:eq(0):checkbox:checked");
+            checkboxs.each(function(){
+                carray.push(parseInt($(this).attr("id")))
+            });
+            console.log("carray:"+carray);
+            $.ajax({
+                url:"/backstage/del",
+                type: "post",
+                data: {
+                    "news_id":JSON.stringify(carray),
+                    "csrfmiddlewaretoken":'{{ csrf_token }}',
+                },
+
+
+
+
+                success:function(data) {
+                    alert('删除成功');
+                    window.location.reload(true);
+                    {#refresh()#}
+                },
+                error: function () {
+                    alert("无法连接服务器");
+                }
+            });
+
+            $('#hintModal').modal('hide')
+        });
+
+        $('#hintModal').modal('show')
+    })
+
+
+    </script>
+</body>
+</html>

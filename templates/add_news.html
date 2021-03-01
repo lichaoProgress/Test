@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/backstage.css" rel="stylesheet">
+     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <title>后台管理</title>
+    <style>
+        .column{
+            width: 1000px;
+            margin: auto;
+            margin-top: 50px;
+            border: 1px #dddddd solid;
+        }
+        .heading{
+            height: 50px;
+            border-bottom: 1px #dddddd solid;
+            padding:10px 15px;
+            background-color: #98a6ba;
+        }
+        .heading h3{
+            text-align: center;
+            line-height: 0;
+        }
+
+        .navbar_brand{
+            height: 50px;
+            padding: 15px 15px;
+            margin-bottom: 5px;
+        }
+        .input-news-style{
+            margin-left: 20px;
+            margin-top: 20px;
+
+        }
+        input[type="text"]{
+            height: 40px;
+            width: 800px;
+            margin-left: 93px;
+            margin-top: -82px;
+        }
+        .footer{
+            margin-top: 170px;
+        }
+        .istop{
+            margin-right: 5px;
+            text-align: center;
+        }
+        .choose{
+            height: 100px;
+            padding-left:50px;
+            padding-top: 30px;
+        }
+        .is_choose{
+            float: left;
+            margin-right: 100px
+        }
+        .board_rank{
+           margin-left: 20px;
+           margin-top: 20px;
+        }
+        #board_rank{
+            margin-left: 94px;
+            margin-top: -35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a class="navbar_brand" href="#">后台管理</a>
+{#        <ul class="nav-right">#}
+{#            <li>#}
+{#                <a href="#">登陆</a>#}
+{#            </li>#}
+{#            <li>#}
+{#                <a href="#">退出</a>#}
+{#            </li>#}
+{#        </ul>#}
+    </div>
+    <div class="row">
+        <div class="column">
+            <div class="heading">
+                <h3>新闻信息</h3>
+            </div>
+            <div class="new_content">
+                <div class="choose">
+                 <div class="is_choose">
+						    <label >是否置顶：</label>
+							<div >
+                                <label class="istop"><input type="radio"  name="add_istop_type" value="1" > 置顶</label><br>
+                                <label class="istop"><input type="radio" name="add_istop_type" value="0" > 普通</label>
+					        </div>
+                        <div style="color:red"></div>
+                    </div>
+
+                <div class="is_choose">
+                    <label >是否紧急：</label>
+						<div >
+                            <label class="istop"><input type="radio"  name="add_isemerg_type" value="1"  > 紧急</label><br>
+                            <label class="istop"><input type="radio" name="add_isemerg_type" value="0" > 非紧急</label>
+					    </div>
+{#                        <div>是否紧急</div>#}
+{#                        <select id="add_isemerg_type">#}
+{#                              <option onclick="selectProtoFwd(this);" value="-1">未选择</option>#}
+{#                              <option onclick="selectProtoFwd(this);" value="1">紧急</option>#}
+{#                              <option onclick="selectProtoFwd(this);" value="0">非紧急</option>#}
+{#                        </select>#}
+                    <div style="color:red"></div>
+                </div>
+
+                <div class="is_choose">
+                    <label >是否可用：</label>
+						<div >
+                            <label class="istop"><input type="radio"  name="add_isAvailable_type" value="1" > 可用</label><br>
+                            <label class="istop"><input type="radio" name="add_isAvailable_type" value="0" > 不可用</label>
+					    </div>
+{#                        <div>是否可用</div>#}
+{#                        <select id="add_isAvailable_type">#}
+{#                              <option onclick="selectProtoFwd(this);" value="-1">未选择</option>#}
+{#                                <option onclick="selectProtoFwd(this);" value="1">可用</option>#}
+{#                                <option onclick="selectProtoFwd(this);" value="0">不可用</option>#}
+{#                        </select>#}
+                        <div style="color:red"></div>
+                    </div>
+
+                <div class="is_choose">
+                    <label >是否外链：</label>
+						<div >
+                            <label class="istop"><input type="radio"  name="add_isLink_type" value="1"> 外链</label><br>
+                            <label class="istop"><input type="radio" name="add_isLink_type" value="0" > 无外链</label>
+					    </div>
+{#                        <div>是否外链</div>#}
+{#                        <select id="add_isLink_type">#}
+{#                              <option onclick="selectProtoFwd(this);" value="-1">未选择</option>#}
+{#                              <option onclick="selectProtoFwd(this);" value="1">外链</option>#}
+{#                              <option onclick="selectProtoFwd(this);" value="0">无外链</option>#}
+{#                        </select>#}
+                        <div style="color:red"></div>
+                    </div>
+
+                <div class="is_choose">
+                    <label >是否最热：</label>
+						<div >
+                            <label class="istop"><input type="radio"  name="add_isHot_type" value="1" > 热点新闻</label><br>
+                            <label class="istop"><input type="radio" name="add_isHot_type" value="0" > 普通新闻</label>
+					    </div>
+{#                        <div>是否最热</div>#}
+{#                        <select id="add_isHot_type">#}
+{#                              <option onclick="selectProtoFwd(this);" value="-1">未选择</option>#}
+{#                              <option onclick="selectProtoFwd(this);" value="1">热点新闻</option>#}
+{#                              <option onclick="selectProtoFwd(this);" value="0">普通新闻</option>#}
+{#                        </select>#}
+                        <div style="color:red"></div>
+                    </div>
+            </div>
+                <div class="input_content">
+                    <label class="input-news-style">新闻标题：</label>
+                    <input type="text" id="add_title">
+
+                    <div style="color:red"></div>
+                    <label class="input-news-style">新闻链接：</label>
+                    <input type="text" id="add_url">
+
+                    <div style="color:red"></div>
+                    <label class="input-news-style">新闻来源：</label>
+                    <input type="text" id="add_source">
+
+                    <div style="color:red"></div>
+                    <label class="input-news-style">发布者：</label>
+                    <input type="text" id="add_acthor">
+
+                    <div style="color:red"></div>
+                    <label  class="input-news-style">新闻内容：</label>
+                    <div class="padding_top_5">
+    {#                    <textarea id="content" name="content"  cols="60" rows="5"  class="form-control"></textarea>#}
+                        <textarea name="content" id="add_content" style="width: 819px; height: 400px; margin-left: 93px;margin-top: -58px;overflow-x:scroll;overflow-y:scroll;" type="text/plain"></textarea>
+                    </div>
+                    <div style="color:red"></div>
+
+                     <div style="float: left;margin-right: 20px">
+                            <div class="board_rank">板块级别</div>
+                            <select id="board_rank">
+                                  <option onclick="selectProtoFwd(this);" value="-1">板块级别</option>
+                                  <option onclick="selectProtoFwd(this);" value="0">一级板块</option>
+                                  <option onclick="selectProtoFwd(this);" value="1">二级板块</option>
+                            </select>
+                            <div style="color:red"></div>
+                        </div>
+                    <div style="color:red"></div>
+                </div>
+            </div>
+            <div class="footer">
+                <button id="add_submit" type="button" class="btn btn-primary">提交</button>
+{#                <button id="close" type="button" class="btn btn-default" >关闭</button>#}
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/jquery-2.1.1.min.js"></script>
+    <script>
+        var ue = UE.getEditor('add_content',{
+            toolbars: [[
+            'fullscreen', 'source', '|', 'undo', 'redo', '|',
+            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+            'rowspacingtop', 'rowspacingbottom', 'lineheight', '|',
+            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+            'directionalityltr', 'directionalityrtl', 'indent', '|',
+            'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify', '|', 'touppercase', 'tolowercase', '|',
+            'link', 'unlink', '|', 'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'insertimage', 'emotion', 'scrawl', 'insertvideo', 'music', 'attachment', 'map', 'gmap', 'insertframe', 'insertcode', 'webapp', 'pagebreak', 'template', 'background', '|',
+            'horizontal', 'date', 'time', 'spechars', 'snapscreen', 'wordimage', '|',
+             'preview', 'searchreplace', 'drafts', 'help'
+        ]]
+        });
+
+
+        {#添加新闻#}
+        $("#add_submit").click(function() {
+            var param = {
+                "csrfmiddlewaretoken": '{{ csrf_token }}',
+                "title": $("#add_title").val(),
+                "url": $("#add_url").val(),
+                {#"signature": $("#add_signature").val(),#}
+                "source": $("#add_source").val(),
+                {#"content": $("#add_content").val(),#}
+                "content": UE.getEditor('add_content').getContent(),
+                "acthor": $("#add_acthor").val(),
+                {#"isTop": $("#add_istop_type option:selected").attr("value"),#}
+                "isTop": $("input[name='add_istop_type']:checked").attr("value"),
+                {#"isEmergency": $("#add_isemerg_type option:selected").attr("value"),#}
+                "isEmergency": $("input[name='add_isemerg_type']:checked").attr("value"),
+                {#"isAvailable": $("#add_isAvailable_type option:selected").attr("value"),#}
+                "isAvailable": $("input[name='add_isAvailable_type']:checked").attr("value"),
+                {#"isLink": $("#add_isLink_type option:selected").attr("value"),#}
+                "isLink": $("input[name='add_isLink_type']:checked").attr("value"),
+                {#"isHot": $("#add_isHot_type option:selected").attr("value"),#}
+                "isHot": $("input[name='add_isHot_type']:checked").attr("value"),
+                "board_rank": $("#board_rank option:selected").attr("value"),
+            };
+
+            var ischeck = true;
+            var add_title = $("#add_title").val();
+            var add_url = $("#add_url").val();
+            {#var add_signature = $("#add_signature").val();#}
+            var add_source = $("#add_source").val();
+            {#var add_content = $("#add_content").val();#}
+            var add_content = UE.getEditor('add_content').getContent();
+            var acthor = $("#add_acthor").val();
+            {#var isTop = $("#add_istop_type option:selected").attr("value");#}
+            var isTop = $("input[name='add_istop_type']:checked").attr("value");
+            {#var isEmergency = $("#add_isemerg_type option:selected").attr("value");#}
+             var isEmergency = $("input[name='add_isemerg_type']:checked").attr("value");
+            {#var isAvailable = $("#add_isAvailable_type option:selected").attr("value");#}
+             var isAvailable = $("input[name='add_isAvailable_type']:checked").attr("value");
+            {#var isLink = $("#add_isLink_type option:selected").attr("value");#}
+             var isLink = $("input[name='add_isLink_type']:checked").attr("value");
+            {#var isHot = $("#add_isHot_type option:selected").attr("value");#}
+             var isHot = $("input[name='add_isHot_type']:checked").attr("value");
+            var board_rank = $("#board_rank option:selected").attr("value");
+
+            if (add_title == "") {
+                $("#add_title").next("div").html("标题不能为空");
+                ischeck = false
+            } else {
+                $("#add_title").next("div").html("")
+            }
+
+            if (add_url == "") {
+                $("#add_url").next("div").html("链接不能为空");
+                ischeck = false
+            } else {
+                $("#add_url").next("div").html("")
+            }
+
+            {#if (add_signature == "") {#}
+            {#    $("#add_signature").next("div").html("标识不能为空");#}
+            {#    ischeck = false#}
+            {#    $("#add_signature").next("div").html("")#}
+
+            if (add_source == "") {
+                $("#add_source").next("div").html("新闻来源不能为空");
+                ischeck = false
+            } else {
+                $("#add_source").next("div").html("")
+            }
+
+            if (add_content == "") {
+                $(".add_content").next("div").html("内容不能为空");
+                ischeck = false
+            } else {
+                $(".add_content").next("div").html("")
+            }
+
+            if (add_acthor == "") {
+                $(".add_acthor").next("div").html("内容不能为空");
+                ischeck = false
+            } else {
+                $(".add_acthor").next("div").html("")
+            }
+
+            if (isTop == -1) {
+                $("#isTop").next("div").html("置顶不能为空");
+                ischeck = false
+            } else {
+                $("#isTop").next("div").html("");
+            }
+
+            if (isEmergency == -1) {
+                $("#isEmergency").next("div").html("紧急不能为空");
+                ischeck = false
+            } else {
+                $("#isEmergency").next("div").html("");
+            }
+
+            if (isAvailable == -1) {
+                $("#isAvailable").next("div").html("可用不能为空");
+                ischeck = false
+            } else {
+                $("#isAvailable").next("div").html("");
+            }
+
+            if (isLink == -1) {
+                $("#isLink").next("div").html("链接不能为空");
+                ischeck = false
+            } else {
+                $("#isLink").next("div").html("");
+            }
+
+             if (isHot == -1) {
+                $("#isHot").next("div").html("链接不能为空");
+                ischeck = false
+            } else {
+                $("#isHot").next("div").html("");
+            }
+
+            if (board_rank == -1) {
+                $("#board_rank").next("div").html("级别不能为空");
+                ischeck = false
+            } else {
+                $("#board_rank").next("div").html("");
+            }
+
+            if (!ischeck) {
+                return;
+            }
+
+            $.ajax({
+                url: "/backstage/add_news",
+                {#url:'{% url 'add_news' %}',#}
+                type: "post",
+                data: param,
+                success: function (callback) {
+                    if (callback.code === 200) {
+                        alert('添加成功')
+                    } else {
+                        alert('添加失败')
+                    }
+                }
+            });
+            {#$('input[type=radio][name="chewu"]:checked').prop("checked", false);#}
+{#            将填的数据全部置为空#}
+            $("input[type='radio']").removeAttr('checked');
+
+            $("#add_title").val("");
+            $("#add_url").val("");
+            {#$("#add_signature").val("");#}
+            $("#add_source").val("");
+            {#$("#add_content").val("");#}
+            UE.getEditor('add_content').setContent('');
+            $("#add_acthor").val("");
+
+             var SelectArr = $("select");
+              for (var i = 0; i < SelectArr.length; i++) {
+                SelectArr[i].options[0].selected = true;
+              }
+        });
+    </script>
+
+</body>
+</html>

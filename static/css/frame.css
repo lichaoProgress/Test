@@ -1,0 +1,476 @@
+/* 
+Author: Start Bootstrap - http://startbootstrap.com
+'SB Admin' HTML Template by Start Bootstrap
+
+All Start Bootstrap themes are licensed under Apache 2.0. 
+For more info and more free Bootstrap 3 HTML themes, visit http://startbootstrap.com!
+*/
+
+/* ATTN: This is mobile first CSS - to update 786px and up screen width use the media query near the bottom of the document! */
+
+/* Global Styles */
+
+body {
+  margin-top: 50px;
+  background-color: white;
+}
+
+body, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, "Microsoft YaHei";
+}
+
+/*#whole-wrapper {
+  padding-left: 180px;
+}*/
+#whole-wrapper {
+    padding-left: 0px;
+}
+
+#whole-wrapper-no-menu {
+    padding-left: 0px;
+}
+
+/* Nav Messages */
+
+.messages-dropdown .dropdown-menu .message-preview .avatar,
+.messages-dropdown .dropdown-menu .message-preview .name,
+.messages-dropdown .dropdown-menu .message-preview .message,
+.messages-dropdown .dropdown-menu .message-preview .time {
+  display: block;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .avatar {
+  float: left;
+  margin-right: 15px;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .name {
+  font-weight: bold;
+  color: #06c;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .message {
+  font-size: 12px;
+}
+
+.messages-dropdown .dropdown-menu .message-preview .time {
+  font-size: 12px;
+}
+
+
+/* Nav Announcements */
+
+.announcement-heading {
+  font-size: 50px;
+  margin: 0;
+}
+
+.announcement-text {
+  margin: 0;
+}
+
+/* Table Headers */
+
+table.tablesorter thead {
+  cursor: pointer;
+}
+
+table.tablesorter thead tr th:hover {
+  background-color: #f5f5f5;
+}
+
+/* Flot Chart Containers */
+
+.flot-chart {
+  display: block;
+  height: 400px;
+}
+
+.flot-chart-content {
+  width: 100%;
+  height: 100%;
+}
+
+.side-nav {
+    margin-left: -180px;
+    left: 180px;
+    width: 180px;
+    position: fixed;
+    top: 50px;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    background-color: #293038;
+    overflow-y: auto;
+}
+
+/* Bootstrap Default Overrides - Customized Dropdowns for the Side Nav */
+
+/*.side-nav>li.dropdown>ul.dropdown-menu,.side-nav>li.dropdown>ul.dropdown-menu>li.dropdown-submenu>ul.dropdown-menu{*/
+     /*position: relative;*/
+     /*min-width: 180px;*/
+     /*margin: 0;*/
+     /*padding: 0;*/
+     /*border: none;*/
+     /*border-radius: 0;*/
+     /*background-color: transparent;*/
+     /*box-shadow: none;*/
+     /*-webkit-box-shadow: none;*/
+ /*}*/
+
+/*.side-nav>li.dropdown>ul.dropdown-menu>li>a,.side-nav>li.dropdown>ul.dropdown-menu>li.dropdown-submenu>ul.dropdown-menu>li>a {*/
+    /*color: #999999;*/
+    /*padding: 10px 15px 10px 25px;*/
+/*}*/
+
+.side-nav li.dropdown ul.dropdown-menu{
+    position: relative;
+    min-width: 180px;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.side-nav li.dropdown ul.dropdown-menu li a{
+    color: #999999;
+    padding: 10px 15px 10px 25px;
+}
+
+/*第三级目录样式*/
+.side-nav>li.dropdown>ul.dropdown-menu>li.dropdown>ul.dropdown-menu>li>a {
+    font-size: small;
+    padding-left: 35px;
+}
+
+
+.side-nav li.dropdown ul.dropdown-menu li>a:hover,
+.side-nav li.dropdown ul.dropdown-menu li>a.active,
+.side-nav li.dropdown ul.dropdown-menu li>a:focus {
+	color: #fff;
+	background-color: #37424F;
+}
+
+.side-nav>li>a {
+	width: 180px;
+	background: #22282e;
+	color: #f5f5f5;
+}
+
+/* Nav Messages */
+
+.messages-dropdown .dropdown-menu {
+	min-width: 400px;
+}
+
+.messages-dropdown .dropdown-menu li a {
+	white-space: normal;
+}
+
+.navbar-blue{
+	background-color: #09C;
+	height:50px;
+}
+.navbar-header-fix-height{
+	height:50px;
+}
+
+.navbar-header-img{
+	height:40px; margin:5px;
+}
+
+.navbar-right > li > a {
+	color: #f5f5f5;
+}
+
+.side-nav .open > a, .side-nav .open > a:hover, .side-nav .open > a:focus {
+    background-color: #22282E;
+}
+.side-nav > li > a:hover, .side-nav > li > a:focus {
+    color: #fff;
+	background-color: #37424F;
+}
+
+.navbar-right > li > a:hover, .navbar-right > li > a:focus {
+    background-color: rgba(2, 96, 128, 0.19);
+}
+
+.side-nav .open > a, .side-nav .open > a:hover, .side-nav .open > a:focus {
+    color: #f5f5f5;
+}
+
+.navbar-right .open > a, .navbar-right .open > a:hover, .navbar-right .open > a:focus {
+    color: #080808;
+}
+
+.navbar-nav .caret {
+    border-top-color: #f5f5f5;
+	border-bottom-color: #f5f5f5;
+}
+
+.navbar-nav a:hover .caret {
+    border-top-color: #f5f5f5;
+    border-bottom-color: #f5f5f5;
+}
+
+.side-nav .open > a .caret, .side-nav .open > a:hover .caret, .side-nav .open > a:focus .caret {
+    border-top-color: #f5f5f5;
+	border-bottom-color: #f5f5f5;
+}
+
+
+.navbar-right .open > a .caret, .navbar-right .open > a:hover .caret, .navbar-right .open > a:focus .caret {
+    border-top-color: #080808;
+    border-bottom-color: #080808;
+}
+
+.side-nav > li {
+	border-bottom: solid 1px rgb(49, 49, 49);
+}
+
+.active-blue{
+	background: #09C;
+	color: #fff;
+}
+
+.search-dropdown ul{
+	padding:0 0;
+	border: none;
+	min-width: 300px;
+}
+
+.qrcode-dropdown .thumbnail{
+    margin-bottom: 0;
+}
+.qrcode-dropdown p{
+	text-align: center;
+}
+
+.qrcode-dropdown ul{
+	padding:0 0;
+	border: none;
+}
+p.check-more{
+	text-align: center;
+}
+
+.navbar-right .badge{
+	background: #FF9900;
+}
+
+
+
+
+.widget {
+    clear: both;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.widget .widget-header {
+    border: 1px solid #e1e6eb;
+    position: relative;
+    background-color: #f5f6fa;
+    height: 52px;
+    padding: 0 15px;
+    line-height: 52px;
+}
+
+.widget .widget-header .title {
+    color: #3693cf;
+    font-weight: bold;
+}
+
+
+.widget-header-index {
+    border-bottom: 0px solid #e1e6eb !important;
+    border-left: 4px solid #328FCA !important;
+
+}
+.widget-header-index-title {
+
+    text-align: left;
+    font-size: 14px;
+}
+
+
+ul.dropdown-list-style > li:hover{
+    cursor:pointer;
+    background-color: #D9D9D9;
+}
+
+ul.dropdown-list-style> li{
+    padding-left: 10px;
+    border-bottom: solid 1px #D9D9D9;
+    height: 34px;
+    line-height: 34px;
+}
+
+.dropdown-list-style{
+    padding: 0px
+}
+
+
+#addModal .bootstrap-select.node-id-select,#changeModal .bootstrap-select.node-id-select{
+    width: 100% !important;
+}
+
+.date_div{
+    float: left;
+}
+
+
+/*--------------------------------
+        login
+---------------------------------*/
+.copyright {
+    text-align: center;
+    color: lightgray;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 12px;
+}
+
+.normal_color {
+    color: #05f501 !important;
+}
+.abnormal_color {
+    color: red !important;
+}
+
+.padding_top_5 {
+    padding-top: 5px;
+}
+
+
+/*product.css开始*/
+.margin_ddos1 {
+    margin: 15px 30px;
+}
+
+.tab_color {
+    color: lightskyblue;
+}
+
+.common_margin {
+    margin: 10px 25px;
+}
+
+.tbl_font_size {
+    font-size: 12px;
+}
+
+.thead {
+    font-size: 12px;
+    font-family: Helvetica;
+    color: gray;
+    font-weight: normal;
+    background-color: #F5F6FA;
+}
+
+.table tbody tr td {
+    /*vertical-align: middle;*/
+}
+
+
+/*product.css结束*/
+
+/*detector.css开始*/
+
+.search-input{
+    width: 172px !important;
+    display:inline-block !important;
+}
+
+.dvc_istce_config-input{
+    width: 1150px !important;
+    display:inline-block !important;
+}
+
+.btn-interval{
+    margin-left: 10px
+}
+
+.btn-interval2{
+    margin-left: 14px
+}
+
+.btn-banner{
+    margin-left: 25px;
+    margin-bottom: 10px;
+    margin-right: 15px;
+}
+
+.dropdown-inline{
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu-width{
+    width: 160px
+}
+
+.dropdown-btn,.dropdown-btn:hover,.dropdown-btn:focus{
+    background: #43BFE3;
+    color: #FFFFFF;
+    border-radius: 0;
+}
+a {
+    cursor:pointer;
+}
+
+
+/*detector.css结束*/
+
+
+/*node.css*/
+
+/*begin node_status.php*/
+.node_table {
+    margin-bottom: 0px !important;
+}
+
+.node_table tr td {
+    width: 50%;
+    padding: 5px !important;
+}
+
+.node_msg_name {
+    text-align: left;
+    color: darkgrey;
+}
+.node_msg_value {
+    text-align: right;
+    color: #000;
+}
+
+td.node_msg_value > span {
+    color: darkgrey;
+}
+
+.status_maintable_td {
+    border: 0px !important;
+    /*width: 25%;*/
+    width: 20%;
+    padding: 5px !important;
+}
+
+.node_id_highlight {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.check-link {
+    padding: 3px 6px !important;
+    font-size: 12px !important;
+}
+.node_div_container_abnormal {
+    background-color: #ff4a4d !important;
+}
+/*end node_status.php*/
+
+
+/*node.css结束*/

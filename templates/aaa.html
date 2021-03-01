@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/backstage.css" rel="stylesheet">
+    <title>后台管理</title>
+    <style>
+        .navbar_brand{
+            height: 50px;
+            padding: 15px 15px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-nav">
+        <a class="navbar_brand" href="#">后台管理</a>
+        <ul class="nav-right">
+            <li>
+                <a href="#">登陆</a>
+            </li>
+            <li>
+                <a href="#">退出</a>
+            </li>
+        </ul>
+    </div>
+    <div class="nav-collapse">
+        <h1>新闻管理</h1>
+        <button class="btn" type="button" id="searchButton">搜索新闻</button>
+        <input type="text" class="search-query" placeholder="Search" />
+{#        <button type="button" class="btn brand" data-toggle="modal" data-target="#addModal">添加新闻</button>#}
+        <button type="button" class="btn brand" onclick="window.open('../backstage/add/','_self')">添加新闻</button>
+
+    </div>
+    <div class="row">
+        <div class="span9">
+            <table class="table table-bordered table-striped" id="maintable">
+                <thead>
+                    <tr>
+                        <th width="2%"></th>
+                        <th width="10%" class="content-set">标题</th>
+                        <th width="10%">链接</th>
+                        <th width="5%">网页标识</th>
+                        <th width="5%">新闻来源</th>
+                        <th width="25%">正文   新闻内容</th>
+                        <th width="10%">添加时间</th>
+                        <th width="4%">级别</th>
+                        <th width="3%">发布者</th>
+                        <th width="3%">审核人</th>
+                        <th width="3%">评论数</th>
+                        <th width="3%">阅读数</th>
+                        <th width="2%">是否可用</th>
+                        <th width="2%">是否置顶</th>
+                        <th width="2%">是否链接</th>
+                        <th width="2%">是否紧急</th>
+                        <th width="5%">操作</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                 <tfoot>
+                    <tr>
+                        <td colspan="16">
+                            <div class="pull-left">
+                                <button resourceid="312" class="btn btn-default btn-sm" id="del_new">删除</button>
+                                <button class="btn btn-default btn-sm" id="refresh">刷新</button>
+                            </div>
+                            <div class="pull-right">
+                                <div class="pagination">
+                                <span style="vertical-align:10px;">共有<strong id="totalcount"></strong>条，每页显示：<!--<strong id="p_size">10</strong>-->
+                                    <select id="p_size" onchange="selectPsize()" style="height:24px;border-radius:4px;">
+                                        <option value='10'>10</option>
+                                        <option value='20'>20</option>
+                                        <option value='50'>50</option>
+                                        <option value='100'>100</option>
+                                    </select>
+                                条</span>
+                                <ul id="pagination" class="pagination pagination-sm" style="margin: 0%;"></ul>
+                                <input type="text" class="form-control"
+                                       style="width: 50px;display: inline;height:29px; margin: 0%;vertical-align: 9px;border-radius: 4px;" id="pn"
+                                       placeholder="">
+                                <input type="button" class="form-control btn btn-primary"
+                                       style="width: 50px;display: inline;height:29px;margin: 0%;vertical-align: 8px;border-radius: 4px;padding: 5px 12px;"
+                                       id="gotopn" value="跳转">
+	                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+        </div>
+    </div>
+    <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="hintLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">
+                    提示框
+                </h4>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <p style="color: red"></p>
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+            <div id="new_label_div" style="display: none;text-align: center;">
+                <span>新备注标签：</span> <input id="new_label" type="text" class="form-control" style="width: 250px !important;display: inline-block !important;">
+                <div style="color:red"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button id="delSubmit" type="button" class="btn btn-primary">确定</button>
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+    <script src="/static/js/jquery-2.1.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+        var p_size =10;
+        {#function selectProtoFwd(obj) {#}
+        {#    $(obj).parent().parent().find("span:first").attr("value",$(obj).attr("value"));#}
+        {#    $(obj).parent().parent().find("span:first").text($(obj).text());#}
+
+
+    {#展示新闻#}
+    {#function ShowPage(){#}
+    {#    $.ajax({#}
+    {#        url:"/backstage/show",#}
+    {#        type: "get",#}
+            {#data: searchParam,#}
+    {#        success:function(data) {#}
+    {#            for (var i = 0; i < data["msg"].length; i++) {#}
+    {#                 var _row = $("<tr>" +#}
+    {#                     "<td width='2%'></td>" +#}
+    {#                    "<td width='10%' class=\"content-set\"></td>" +#}
+    {#                    "<td width='10%' style='color:#999999' class=\"content-set\"></td>" +#}
+    {#                    "<td width='5%' style='color:#999999' class=\"content-set\"></td>" +#}
+    {#                    "<td width='5%' style='color:#999999' class=\"content-set\"></td>" +#}
+    {#                    "<td width='25%' style='color:#999999' class=\"content-set\"></td>" +#}
+    {#                    "<td width='10%' style='color:#999999'></td>" +#}
+    {#                    "<td width='4%' style='color:#999999'></td>" +#}
+    {#                    "<td width='3%' style='color:#999999' class=\"content-set\"></td>" +#}
+    {#                    "<td width='3%' style='color:#999999'></td>" +#}
+    {#                    "<td width='3%' style='color:#999999'></td>" +#}
+    {#                    "<td width='3%' style='color:#999999'></td>" +#}
+    {#                    "<td width='2%' style='color:#999999'></td>" +#}
+    {#                    "<td width='2%' style='color:#999999'></td>" +#}
+    {#                    "<td width='2%' style='color:#999999'></td>" +#}
+    {#                    "<td width='2%' style='color:#999999'></td>" +#}
+    {#                    "<td width='5%' style='color:#999999'></td>" +#}
+    {#                    "</tr>"#}
+    {#                 );#}
+    {##}
+    {#                 var is_map = {false:'否',true:'是'};#}
+    {#                 var is_rank = {0:'一级板块',1:'二级板块',2:'三级板块'};#}
+    {#                 var row = _row.clone();#}
+    {#                row.find("td:eq(0)").html("<input type='checkbox' class='checkbox' id="+data["msg"][i]["id"]+">");#}
+    {#                     row.find("td:eq(1)").text(data["msg"][i]["title"]);#}
+    {#                     row.find("td:eq(2)").text(data["msg"][i]["url"]);#}
+    {#                     row.find("td:eq(3)").text(data["msg"][i]["signature"]);#}
+    {#                     row.find("td:eq(4)").text(data["msg"][i]["source"]);#}
+    {#                     row.find("td:eq(5)").text(data["msg"][i]["content"]);#}
+    {#                     row.find("td:eq(6)").text(data["msg"][i]["time"]);#}
+    {#                     row.find("td:eq(7)").text(is_rank[data["msg"][i]["board_rank"]]);#}
+    {#                     row.find("td:eq(8)").text(data["msg"][i]["acthor"]);#}
+    {#                     row.find("td:eq(9)").text(data["msg"][i]["auditor"]);#}
+    {#                     row.find("td:eq(10)").text(data["msg"][i]["commentable"]);#}
+    {#                     row.find("td:eq(11)").text(data["msg"][i]["hit"]);#}
+    {#                     row.find("td:eq(12)").text(is_map[data["msg"][i]["isAvailable"]]);#}
+    {#                     row.find("td:eq(13)").text(is_map[data["msg"][i]["isTop"]]);#}
+    {#                     row.find("td:eq(14)").text(is_map[data["msg"][i]["isLink"]]);#}
+    {#                     row.find("td:eq(15)").text(is_map[data["msg"][i]["isEmergency"]]);#}
+    {#                     row.find("td:eq(16)").html("<a href='#' class='view-link'>查看详情</a>");#}
+    {#                    row.show();#}
+    {#                    row.appendTo("#maintable tbody");#}
+    {##}
+    {#            }#}
+    {##}
+    {#        },#}
+    {#        beforeSend: function () {#}
+    {#            $(".loading-pic").removeClass("hidden");#}
+    {#        },#}
+    {#        error: function () {#}
+    {#            alert("无法连接服务器");#}
+    {#        }#}
+    {#    })#}
+    {#}#}
+    {#ShowPage();#}
+
+
+    function ShowPage(msgListObj){
+         var is_map = {false:'否',true:'是'};
+        var is_rank = {0:'一级板块',1:'二级板块',2:'三级板块'};
+
+        $("#maintable tbody tr").remove();
+        var _row = $("<tr>" +
+            "<td width='2%'></td>" +
+            "<td width='10%' class=\"content-set\"></td>" +
+            "<td width='10%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='5%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='5%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='25%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='10%' style='color:#999999'></td>" +
+            "<td width='4%' style='color:#999999'></td>" +
+            "<td width='3%' style='color:#999999' class=\"content-set\"></td>" +
+            "<td width='3%' style='color:#999999'></td>" +
+            "<td width='3%' style='color:#999999'></td>" +
+            "<td width='3%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='2%' style='color:#999999'></td>" +
+            "<td width='5%' style='color:#999999'></td>" +
+            "</tr>");
+         for (var i = 0; i < msgListObj.length; i++) {
+
+                     var row = _row.clone();
+                    row.find("td:eq(0)").html("<input type='checkbox' class='checkbox' id="+data["msg"][i]["id"]+">");
+                         row.find("td:eq(1)").text(data["msg"][i]["title"]);
+                         row.find("td:eq(2)").text(data["msg"][i]["url"]);
+                         row.find("td:eq(3)").text(data["msg"][i]["signature"]);
+                         row.find("td:eq(4)").text(data["msg"][i]["source"]);
+                         row.find("td:eq(5)").text(data["msg"][i]["content"]);
+                         row.find("td:eq(6)").text(data["msg"][i]["time"]);
+                         row.find("td:eq(7)").text(is_rank[data["msg"][i]["board_rank"]]);
+                         row.find("td:eq(8)").text(data["msg"][i]["acthor"]);
+                         row.find("td:eq(9)").text(data["msg"][i]["auditor"]);
+                         row.find("td:eq(10)").text(data["msg"][i]["commentable"]);
+                         row.find("td:eq(11)").text(data["msg"][i]["hit"]);
+                         row.find("td:eq(12)").text(is_map[data["msg"][i]["isAvailable"]]);
+                         row.find("td:eq(13)").text(is_map[data["msg"][i]["isTop"]]);
+                         row.find("td:eq(14)").text(is_map[data["msg"][i]["isLink"]]);
+                         row.find("td:eq(15)").text(is_map[data["msg"][i]["isEmergency"]]);
+                         row.find("td:eq(16)").html("<a href='#' class='view-link'>查看详情</a>");
+                        row.show();
+                        row.appendTo("#maintable tbody");
+
+                }
+    }
+
+
+
+    {#删除新闻#}
+    $("#del_new").click(function(){
+        $('#hintModal').find(".modal-title").html("删除提示框")
+
+        var lines = $("#maintable tbody tr");
+        var checkboxs = lines.find("input:eq(0):checkbox:checked");
+
+        if(checkboxs.size() == 0){
+            alert("请选择删除数据");
+            return;
+        }
+
+        var content = "<p >将删除<span style='color: red;font-size: large'>"+checkboxs.size()+"</span>条数据，请确认</p>"
+        $('#hintModal').find(".modal-body").html(content);
+
+        var footer = "<button id='delSubmit' type='button' class='btn btn-primary'>确定</button>"+
+            "<button type='button' class='btn btn-default' data-dismiss='modal'>关闭</button>";
+        $('#hintModal').find(".modal-footer").html(footer);
+
+        $("#delSubmit").click(function(){
+            var carray =new Array()
+            var lines = $("#maintable tbody tr");
+            var checkboxs = lines.find("input:eq(0):checkbox:checked");
+            checkboxs.each(function(){
+                carray.push(parseInt($(this).attr("id")))
+            });
+            console.log("carray:"+carray);
+            $.ajax({
+                url:"/backstage/del",
+                type: "post",
+                data: {
+                    "news_id":JSON.stringify(carray),
+                    "csrfmiddlewaretoken":'{{ csrf_token }}',
+                },
+                success:function(data) {
+                    alert('删除成功');
+                    window.location.reload(true);
+                    {#refresh()#}
+                },
+                error: function () {
+                    alert("无法连接服务器");
+                }
+            });
+
+            $('#hintModal').modal('hide')
+        });
+
+        $('#hintModal').modal('show')
+    });
+
+     //分页设置
+    var option = {
+        visiblePages: 3,
+        first: "<<",
+        prev: "<",
+        next: ">",
+        last: ">>",
+        onPageClick: function (event, page){
+            $.ajax({
+                url: option.myurl+"&pn="+page,
+                type: "post",
+                data: option.searchParam,
+                success:function(data) {
+                    var ret = JSON.parse(data);
+                    if (ret["msg"].length != 0) {
+
+                        ShowPage(ret["msg"]);
+                    } else if (ret["msg"].length == 0) {
+                        $("#maintable tbody tr").remove();
+                        $("<tr><td colspan=" + col_size + " style='text-align: center'><h4>没有消息</h4></td></tr>").appendTo("#maintable tbody");
+                    }else{
+                        alert(ret["msg"]);
+                    }
+                },
+            });
+
+        }
+    }
+
+    function pagination(totalcount,url,startPage,searchParam){
+        var totalPages = 0;
+        if(totalcount == 0){
+            totalPages = 1; //0条数据会报错
+        }else{
+            totalPages = Math.ceil(totalcount/p_size);
+        }
+        option["totalPages"] = totalPages;
+        option["myurl"] = url;
+        option["startPage"] = startPage;
+        option["searchParam"] = searchParam;
+        $('#pagination').twbsPagination(option);
+    }
+
+     function LoadPage(currentPage,searchParam){
+        $.ajax({
+            url:"/backstage/count",
+            type: "post",
+            data: searchParam,
+            success:function(data) {
+                var ret = JSON.parse(data);
+                if (ret['msg']['count'] != 0)
+                    ret = ret['msg']["count"];
+                else {
+                    ret = 0;
+                }
+                $("#totalcount").text(ret);
+                $('#pagination').empty();
+                $('#pagination').removeData("twbs-pagination");
+                $('#pagination').unbind("page");
+                pagination(ret,"/backstage/show&p_size="+p_size,parseInt(currentPage),searchParam)
+            },
+        })
+    }
+
+    var globalSearchParam = {random:1};
+    //第一次加载分页
+    LoadPage(1,globalSearchParam)
+    </script>
+</body>
+</html>
